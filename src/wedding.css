@@ -838,7 +838,7 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(1.15rem, 4.5vw, 1.7rem);
+  font-size: clamp(1.3rem, 5vw, 2rem);
   color: var(--h1);
   line-height: 1.38;
   margin-bottom: 15px;

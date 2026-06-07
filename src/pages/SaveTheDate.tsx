@@ -710,7 +710,7 @@ export default function SaveTheDate() {
             </div>
           </div>
           <div className="section-tap-cue">
-            <TapCue label="Final Note" />
+            <TapCue label="Tap to Continue" />
           </div>
         </div>
       )}
