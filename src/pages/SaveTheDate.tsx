@@ -40,7 +40,7 @@ const EVENT_SCHEDULE = [
     mapLink: "https://maps.app.goo.gl/1gpUV6YcKUqC88Tu9",
     events: [
       { title: "Haldi", time: "10:30 AM" },
-      { title: "Mehndi", time: "11:00 AM onwards" },
+      { title: "Mehndi", time: "11:00 AM - 3:00 PM" },
       { title: "Bhaat", time: "12:00 PM" },
     ],
   },
@@ -52,8 +52,8 @@ const EVENT_SCHEDULE = [
     mapLink: "https://maps.app.goo.gl/hAfzLeserj9Ha1Hg8",
     events: [
       { title: "Baraat", time: "2:00 PM" },
-      { title: "Varmala", time: "5:00 PM" },
-      { title: "Pheras", time: "6:00 PM" },
+      { title: "Varmala", time: "4:00 PM" },
+      { title: "Pheras", time: "5:00 PM" },
       { title: "Reception", time: "8:00 PM" },
     ],
   },
