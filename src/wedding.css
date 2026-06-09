@@ -888,6 +888,190 @@ html, body, #root { height: 100%; width: 100%; overflow: hidden; background: var
   100% { transform: translateY(110vh) translateX(var(--drift, 40px)) rotate(calc(var(--rot, 1.5) * 360deg)) scale(1.1); opacity: 0; }
 }
 
+.rsvp-section {
+  background: linear-gradient(168deg, var(--ivory) 0%, #f0dbd5 55%, #ecdbd8 100%);
+  justify-content: flex-start;
+  padding: 0 0 72px;
+  overflow: hidden;
+  gap: 0;
+}
+
+/* ── Header ── */
+.rsvp-header {
+  width: 100%;
+  text-align: center;
+  padding: clamp(22px, 5dvh, 38px) 20px clamp(10px, 2dvh, 18px);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* Decorative top rule */
+.rsvp-header::before {
+  content: "✦  ✦  ✦";
+  display: block;
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+  margin-bottom: clamp(10px, 2dvh, 16px);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.rsvp-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.62rem, 2vw, 0.75rem);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--deep-rose);
+  margin-bottom: clamp(4px, 1dvh, 8px);
+}
+
+.rsvp-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 4.2rem);
+  color: var(--h1);
+  line-height: 1;
+  margin-bottom: clamp(6px, 1.5dvh, 10px);
+}
+
+.rsvp-subline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  color: var(--body);
+  line-height: 1.5;
+  max-width: 340px;
+  margin: 0 auto;
+  opacity: 0.85;
+}
+
+/* ── Iframe wrapper ── */
+.rsvp-frame-wrap {
+  flex: 1;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Soft fade at the bottom so the iframe blends into the page */
+.rsvp-frame-wrap::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  background: linear-gradient(to top, #f0dbd5 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.rsvp-iframe {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  border: none;
+  border-radius: 24px;
+  background: transparent;
+  /* Tally's transparent background will let the site bg show through */
+}
+
+/* ── Thank-you card ── */
+.rsvp-thankyou {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2.5dvh, 18px);
+  padding: clamp(28px, 6dvh, 48px) 24px;
+  text-align: center;
+  flex: 1;
+}
+
+.rsvp-ty-icon {
+  font-size: clamp(3rem, 12vw, 4.5rem);
+  line-height: 1;
+  filter: drop-shadow(0 4px 18px rgba(160,104,120,0.25));
+  animation: subtle-pulse 2.6s ease-in-out infinite;
+}
+
+.rsvp-ty-heading {
+  font-family: 'Amazone', cursive;
+  font-size: clamp(2.4rem, 9.5vw, 3.5rem);
+  color: var(--h1);
+  line-height: 1.05;
+}
+
+.rsvp-ty-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 4.2vw, 1.45rem);
+  color: var(--body);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+.rsvp-ty-btn {
+  margin-top: clamp(6px, 1.5dvh, 12px);
+  padding: 13px 38px;
+  background: linear-gradient(135deg, var(--rose) 0%, var(--dusty) 100%);
+  border: none;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--h1);
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(94,62,62,0.13);
+  transition: transform 0.15s;
+}
+.rsvp-ty-btn:active { transform: scale(0.97); }
+
+/* ── Bottom cue override ── */
+.rsvp-bottom-cue {
+  /* Keep it above the gradient fade */
+  z-index: 5;
+}
+
+/* ── Small screen tweaks ── */
+@media (max-height: 700px) {
+  .rsvp-section {
+    padding-bottom: 60px;
+  }
+
+  .rsvp-header {
+    padding-top: 16px;
+    padding-bottom: 8px;
+  }
+
+  .rsvp-header::before {
+    margin-bottom: 8px;
+  }
+
+  .rsvp-heading {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+  }
+
+  .rsvp-subline {
+    font-size: clamp(0.86rem, 3.2vw, 1rem);
+  }
+
+  .rsvp-frame-wrap {
+    padding: 0 12px;
+  }
+}
+
 @media (max-height: 760px) {
   .end-inner {
     padding: 14px 16px 122px;

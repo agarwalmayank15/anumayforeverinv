@@ -146,6 +146,7 @@ export default function SaveTheDate() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [confettiParticles, setConfettiParticles] = useState<Particle[]>([]);
   const [fingerGlow, setFingerGlow] = useState(false);
+  const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
 
   /* Countdown */
   const [timeLeft, setTimeLeft] = useState({
@@ -201,6 +202,7 @@ export default function SaveTheDate() {
     setShowSuccess(false);
     setFingerGlow(false);
     setConfettiParticles([]);
+    setRsvpSubmitted(false);
     setDateRevealed(false);
     setDateDigits([
       randDigit(),
@@ -314,6 +316,33 @@ export default function SaveTheDate() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [section]);
+
+  useEffect(() => {
+    const handler = (event: MessageEvent) => {
+      if (event.origin !== "https://tally.so") return;
+
+      let data = event.data;
+
+      if (typeof data === "string") {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          return;
+        }
+      }
+
+      if (data?.event === "Tally.FormSubmitted") {
+        console.log("RSVP submitted!");
+        setRsvpSubmitted(true);
+      }
+    };
+
+    window.addEventListener("message", handler);
+
+    return () => {
+      window.removeEventListener("message", handler);
+    };
+  }, []);
 
   const doDateReveal = () => {
     if (dateRevealed) return;
@@ -778,7 +807,7 @@ export default function SaveTheDate() {
               setSection(6);
             }}
           >
-            <TapCue label="Final Note" />
+            <TapCue label="Tap to continue" />
           </div>
 
           {openEventIdx !== null && (
@@ -790,17 +819,73 @@ export default function SaveTheDate() {
         </div>
       )}
 
-        
-
-      {/* ════ S6 – END SLATE ════ */}
+      {/* ════ S6 – RSVP ════ */}
       {section === 6 && (
+        <div className="section rsvp-section">
+
+          {/* Header */}
+          <div className="rsvp-header fade-in-up">
+            <p className="rsvp-eyebrow">You're Invited</p>
+            <h2 className="rsvp-heading">RSVP</h2>
+            <p className="rsvp-subline">
+              Kindly let us know you're coming & share your ID for hotel booking
+            </p>
+          </div>
+
+          {/* Tally iframe embed */}
+          <div className="rsvp-frame-wrap fade-in-up-d1">
+            {!rsvpSubmitted ? (
+              <iframe
+                // ↓↓ REPLACE THIS URL with your actual Tally embed link ↓↓
+                src="https://tally.so/embed/zxd821?hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                className="rsvp-iframe"
+                frameBorder="0"
+                marginHeight={0}
+                marginWidth={0}
+                title="RSVP Form"
+                allow="camera; microphone"
+              />
+            ) : (
+              // ── Thank-you card shown after Tally form submit ──
+              <div className="rsvp-thankyou fade-in-up">
+                <div className="rsvp-ty-icon">💌</div>
+                <h3 className="rsvp-ty-heading">We got it!</h3>
+                <p className="rsvp-ty-body">
+                  Thank you for RSVPing. We can't wait to celebrate with you. ♥️
+                </p>
+                <button
+                  className="rsvp-ty-btn"
+                  onClick={() => setSection(7)}
+                >
+                  Final Note
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Bottom navigation – skip + post-submit continue */}
+          <div className="section-tap-cue rsvp-bottom-cue">
+            {!rsvpSubmitted ? (
+              <button
+                className="ring-skip-btn"
+                onClick={() => setSection(7)}
+                type="button"
+              >
+                Skip — I'll RSVP later
+              </button>
+            ) : null}
+          </div>
+        </div>
+      )}
+
+      {/* ════ S7 – END SLATE (was S6) ════ */}
+      {section === 7 && (
         <div
           className="section end-section"
           onClick={goHome}
           style={{ cursor: "pointer" }}
         >
           <div className="end-inner fade-in-up">
-            {/* Logo video – no box, borderless, large */}
             <div className="end-logo-wrap">
               <video
                 className="end-logo-video"
@@ -822,8 +907,6 @@ export default function SaveTheDate() {
             <p className="end-line">{C.endLine}</p>
             <p className="end-hashtag">{C.hashtag}</p>
           </div>
-
-          {/* Home cue pinned at bottom */}
           <div className="section-tap-cue">
             <TapCue label="Back to Home" />
           </div>
